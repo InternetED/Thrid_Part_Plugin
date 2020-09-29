@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Google AdMob -->
+    <string name="admob_id">ca-app-pub-5377836474241430~4224903707</string>
+
+
+
+    <!-- Facebook Login -->
+    <string name="facebook_id">298775961167198</string>
+    <string name="fb_login_protocol_scheme">fb[298775961167198]</string>
+
+</resources>

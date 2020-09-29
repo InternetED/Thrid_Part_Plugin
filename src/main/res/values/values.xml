@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--    MaterialDialog 內的 左、右的邊距-->
+    <dimen name="md_dialog_frame_margin_horizontal">0dp</dimen>
+
+    <!--    MaterialDialog 內的 上、下的邊距-->
+    <!--    <dimen name="md_dialog_frame_margin_vertical">0dp</dimen>-->
+
+
+    <!--    MaterialDialog 與外層左、右的邊距-->
+    <dimen name="md_dialog_horizontal_margin">0dp</dimen>
+
+    <!--    MaterialDialog 與外層上、下的邊距-->
+    <dimen name="md_dialog_vertical_margin">0dp</dimen>
+
+    <!--    控制 Dialog 最大寬度-->
+    <!--    <dimen name="md_dialog_max_width">150dp</dimen>-->
+
+
+</resources>
