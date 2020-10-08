@@ -24,13 +24,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    dataBinding{
+    dataBinding {
         enabled true
     }
 
 }
 
 dependencies {
+    api project(path: ':androidbase')
+
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -57,7 +60,7 @@ dependencies {
     implementation 'com.linecorp:linesdk:5.0.1'
 
     // InternetED base methods
-    api 'com.github.InternetED:base:2.0.1'
+//    api 'com.github.InternetED:base:2.0.1'
 
     def lifecycle_version = "2.2.0"
 
