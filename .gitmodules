@@ -1,0 +1,3 @@
+[submodule "base"]
+	path = base
+	url = git@github.com:InternetED/base.git
