@@ -27,10 +27,12 @@
             android:exported="true"
             android:name="com.facebook.FacebookContentProvider" />
 
+        <!--        AdMob 使用的-->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/admob_id" />
 
+        <!--        提供給 Facebook 登入使用的-->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_id" />
