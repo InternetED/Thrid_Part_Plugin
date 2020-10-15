@@ -7,24 +7,25 @@
 
 
         <provider
-            android:name=".ad.AdManagerProvider"
             android:authorities="${applicationId}.admanagerprovider"
-            android:exported="false" />
+            android:exported="false"
+            android:name=".ad.AdManagerProvider" />
 
         <provider
-            android:name=".lifecycle.AppManagerProvider"
             android:authorities="${applicationId}.appmanagerprovider"
-            android:exported="false" />
+            android:exported="false"
+            android:name=".lifecycle.AppManagerProvider" />
 
         <provider
-            android:name=".login.LoginManagerProvider"
             android:authorities="${applicationId}.loginmanagerprovider"
-            android:exported="false" />
+            android:exported="false"
+            android:name=".login.LoginManagerProvider" />
 
 
-        <provider android:authorities="com.facebook.app.FacebookContentProvider{298775961167198}"
-            android:name="com.facebook.FacebookContentProvider"
-            android:exported="true"/>
+        <provider
+            android:authorities="com.facebook.app.FacebookContentProvider${applicationId}"
+            android:exported="true"
+            android:name="com.facebook.FacebookContentProvider" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
@@ -33,7 +34,6 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_id" />
-
 
 
     </application>
