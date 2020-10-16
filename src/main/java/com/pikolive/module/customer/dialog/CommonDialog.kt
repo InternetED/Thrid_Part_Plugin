@@ -42,7 +42,7 @@ fun createDialog(
             override fun convertView(holder: ViewHolder, dialog: BaseLDialog<*>) {
 
                 val tvDialogTitle = holder.getView<TextView>(R.id.tvDialogTitle)
-                val tvDialogContext = holder.getView<TextView>(R.id.tvDialogContext)
+                val tvDialogContext = holder.getView<TextView>(R.id.tvDialogContent)
                 val tvPositive = holder.getView<TextView>(R.id.tvPositive)
                 val tvNegative = holder.getView<TextView>(R.id.tvNegative)
 

@@ -29,10 +29,10 @@
 
 
         <TextView
-            android:id="@+id/tvDialogContext"
+            android:id="@+id/tvDialogContent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:padding="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +45,6 @@
             android:id="@+id/tvPositive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
             android:background="@drawable/novel_tv_exit_ok"
             android:gravity="center"
             android:paddingStart="8dp"
@@ -55,7 +54,8 @@
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDialogContext"
+            app:layout_constraintStart_toEndOf="@id/tvNegative"
+            app:layout_constraintTop_toBottomOf="@+id/tvDialogContent"
             tools:text="正向" />
 
 
@@ -63,12 +63,12 @@
             android:id="@+id/tvNegative"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
             android:gravity="center"
             android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tvPositive"
-            app:layout_constraintTop_toBottomOf="@+id/tvDialogContext"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDialogContent"
             tools:text="負向" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
