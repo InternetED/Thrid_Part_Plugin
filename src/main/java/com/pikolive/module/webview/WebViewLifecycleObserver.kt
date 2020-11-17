@@ -15,6 +15,8 @@ import java.lang.ref.WeakReference
  *
  * **/
 class WebViewLifecycleObserver(webView: WebView) : LifecycleObserver {
+    private val TAG = javaClass.simpleName
+
     private val weakWebView = WeakReference(webView)
 
     private val webView: WebView?
@@ -22,7 +24,7 @@ class WebViewLifecycleObserver(webView: WebView) : LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onResume() {
-        Log.d("asmdoasmdoa" ,"onResume:$webView")
+        Log.d(TAG, "onResume")
         webView?.apply {
             onResume()
             resumeTimers()
@@ -32,7 +34,7 @@ class WebViewLifecycleObserver(webView: WebView) : LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun onPause() {
 
-        Log.d("asmdoasmdoa" ,"onPause:$webView")
+        Log.d(TAG, "onPause")
         webView?.apply {
             onPause()
             pauseTimers()
@@ -43,7 +45,7 @@ class WebViewLifecycleObserver(webView: WebView) : LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy() {
 
-        Log.d("asmdoasmdoa" ,"onDestroy:$webView")
+        Log.d(TAG, "onDestroy")
         webView?.apply {
             this.resumeTimers()
             val context = webView?.context
