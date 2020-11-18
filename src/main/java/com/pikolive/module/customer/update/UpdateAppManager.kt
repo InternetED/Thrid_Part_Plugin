@@ -5,6 +5,8 @@ import androidx.fragment.app.FragmentManager
 import com.pikolive.module.customer.dialog.createDialog
 import com.pikolive.module.customer.update.data.DialogParams
 import com.pikolive.module.customer.update.data.UpdateRequest
+import top.limuyang2.ldialog.base.BaseLDialog
+import top.limuyang2.ldialog.base.ViewHolder
 
 /**
  * Creator: ED
@@ -39,32 +41,35 @@ interface UpdateAppManager {
         fragmentManager: FragmentManager,
         dialogParams: DialogParams,
         positiveCallback: () -> Unit = {},
-        negativeCallback: () -> Unit = {}
+        negativeCallback: () -> Unit = {},
+        afterViewHandlerListener: ((holder: ViewHolder, dialog: BaseLDialog<*>) -> Unit)? = null
     )
-
-    /**
-     * 顯示弱更新的 Dialog
-     *
-     * [createDialog]
-     * */
-    fun showWeakUpdateDialog(
-        fragmentManager: FragmentManager,
-        dialogParams: DialogParams,
-        positiveCallback: () -> Unit = {},
-        negativeCallback: () -> Unit = {}
-    )
-
-    /**
-     * 顯示強更新的 Dialog
-     *
-     * [createDialog]
-     * */
-    fun showStrongUpdateDialog(
-        fragmentManager: FragmentManager,
-        dialogParams: DialogParams,
-        positiveCallback: () -> Unit = {},
-        negativeCallback: () -> Unit = {}
-    )
+//
+//    /**
+//     * 顯示弱更新的 Dialog
+//     *
+//     * [createDialog]
+//     * */
+//    fun showWeakUpdateDialog(
+//        fragmentManager: FragmentManager,
+//        dialogParams: DialogParams,
+//        positiveCallback: () -> Unit = {},
+//        negativeCallback: () -> Unit = {},
+//        afterViewHandlerListener: ((holder: ViewHolder, dialog: BaseLDialog<*>) -> Unit)? = null
+//    )
+//
+//    /**
+//     * 顯示強更新的 Dialog
+//     *
+//     * [createDialog]
+//     * */
+//    fun showStrongUpdateDialog(
+//        fragmentManager: FragmentManager,
+//        dialogParams: DialogParams,
+//        positiveCallback: () -> Unit = {},
+//        negativeCallback: () -> Unit = {},
+//        afterViewHandlerListener: ((holder: ViewHolder, dialog: BaseLDialog<*>) -> Unit)? = null
+//    )
 
 
     companion object {

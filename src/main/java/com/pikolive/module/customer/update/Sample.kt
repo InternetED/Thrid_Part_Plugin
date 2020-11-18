@@ -22,17 +22,8 @@ fun sample(context: Context, fragmentManager: FragmentManager) {
     )
     val dialogParams = DialogParams("標題", "內容")
 
-    when (needPromptUpdate) {
-        UpdateState.STRONG -> {
-            updateManager.showStrongUpdateDialog(fragmentManager, dialogParams)
-        }
-        UpdateState.WEAK -> {
-            updateManager.showWeakUpdateDialog(fragmentManager, dialogParams)
-        }
-        UpdateState.NOTHING -> {
-            // do nothing
-        }
-    }
+    updateManager.showUpdateDialog(needPromptUpdate,fragmentManager,dialogParams)
+
 
 //    val title = "更新標題"
 //    val message = "更新訊息"

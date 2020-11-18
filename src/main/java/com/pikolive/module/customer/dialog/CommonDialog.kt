@@ -38,6 +38,7 @@ fun createDialog(
     return LDialog.init(fragmentManager)
         .setLayoutRes(R.layout.dialog_common)
         .setWidthScale(0.8F)
+        .setBackgroundDrawableRes(R.drawable.def_dialog_bg)
         .setViewHandlerListener(object : ViewHandlerListener() {
             override fun convertView(holder: ViewHolder, dialog: BaseLDialog<*>) {
 

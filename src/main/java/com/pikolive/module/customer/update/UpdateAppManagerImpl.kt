@@ -5,19 +5,18 @@ import androidx.fragment.app.FragmentManager
 import com.pikolive.module.customer.dialog.createDialog
 import com.pikolive.module.customer.update.data.DialogParams
 import com.pikolive.module.customer.update.data.UpdateRequest
+import top.limuyang2.ldialog.base.BaseLDialog
+import top.limuyang2.ldialog.base.ViewHolder
 
 
 internal class UpdateAppManagerImpl : UpdateAppManager {
 
 
-    private lateinit var mUpdateState: UpdateState
 
 
     override fun needPromptUpdate(context: Context, updateRequest: UpdateRequest): UpdateState {
-        mUpdateState =
-            validateRequireUpdate(context, updateRequest.weakVersion, updateRequest.strangeVersion)
 
-        return mUpdateState
+        return validateRequireUpdate(context, updateRequest.weakVersion, updateRequest.strangeVersion)
     }
 
     override fun showUpdateDialog(
@@ -25,44 +24,49 @@ internal class UpdateAppManagerImpl : UpdateAppManager {
         fragmentManager: FragmentManager,
         dialogParams: DialogParams,
         positiveCallback: () -> Unit,
-        negativeCallback: () -> Unit
+        negativeCallback: () -> Unit,
+        afterViewHandlerListener: ((holder: ViewHolder, dialog: BaseLDialog<*>) -> Unit)?
     ) {
         when (updateState) {
             UpdateState.STRONG -> showStrongUpdateDialog(
                 fragmentManager,
                 dialogParams,
                 positiveCallback,
-                negativeCallback
+                negativeCallback,
+                afterViewHandlerListener
             )
             UpdateState.WEAK -> showWeakUpdateDialog(
                 fragmentManager,
                 dialogParams,
                 positiveCallback,
-                negativeCallback
+                negativeCallback,
+                afterViewHandlerListener
             )
             UpdateState.NOTHING -> return
 
         }
     }
 
-    override fun showWeakUpdateDialog(
+    private fun showWeakUpdateDialog(
         fragmentManager: FragmentManager,
         dialogParams: DialogParams,
         positiveCallback: () -> Unit,
-        negativeCallback: () -> Unit
+        negativeCallback: () -> Unit,
+        afterViewHandlerListener: ((holder: ViewHolder, dialog: BaseLDialog<*>) -> Unit)?
     ) {
-        createDialog(fragmentManager, dialogParams, positiveCallback, negativeCallback)
+        createDialog(fragmentManager, dialogParams, positiveCallback, negativeCallback,afterViewHandlerListener)
             .show()
     }
 
 
-    override fun showStrongUpdateDialog(
+    private fun showStrongUpdateDialog(
         fragmentManager: FragmentManager,
         dialogParams: DialogParams,
         positiveCallback: () -> Unit,
-        negativeCallback: () -> Unit
+        negativeCallback: () -> Unit,
+        afterViewHandlerListener: ((holder: ViewHolder, dialog: BaseLDialog<*>) -> Unit)?
     ) {
-        createDialog(fragmentManager, dialogParams, positiveCallback, negativeCallback)
+        createDialog(fragmentManager, dialogParams, positiveCallback, negativeCallback,afterViewHandlerListener)
             .setCancelableAll(false)
             .setCancelableOutside(false)
             .show()
