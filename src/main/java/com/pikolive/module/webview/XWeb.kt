@@ -1,7 +1,6 @@
 package com.pikolive.module.webview
 
 import android.content.Context
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
@@ -9,16 +8,13 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
-import androidx.arch.core.internal.FastSafeIterableMap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.LifecycleObserver
 import com.pikolive.module.webview.client.DefaultWebChromeClient
 import com.pikolive.module.webview.container.WebViewParentLayout
 import com.pikolive.module.webview.indicator.IndicatorController
 import com.pikolive.module.webview.indicator.IndicatorHandler
 import com.pikolive.module.webview.indicator.WebIndicator
-import com.pikolive.module.webview.settings.WebListenerManager
 import com.pikolive.module.webview.settings.XWebSettings
 import com.pikolive.module.webview.video.IVideo
 import com.pikolive.module.webview.video.VideoImpl
@@ -103,6 +99,7 @@ class XWeb private constructor(
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
         )
+        webIndicator.visibility = View.GONE
 
         viewGroup.addView(
             webViewParentLayout, ViewGroup.LayoutParams(
@@ -134,18 +131,4 @@ class XWeb private constructor(
     }
 
 
-}
-
-
-fun create(viewGroup: ViewGroup) {
-    val context = viewGroup.context
-
-    val webViewParentLayout = WebViewParentLayout(context)
-
-    val webView = NestedScrollAgentWebView(context)
-    webViewParentLayout.addView(webView, ViewGroup.LayoutParams(-1, -1))
-    val webIndicator = WebIndicator(context)
-
-
-    webViewParentLayout.addView(webIndicator)
 }

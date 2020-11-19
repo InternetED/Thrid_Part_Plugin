@@ -92,7 +92,7 @@ class WebIndicator @JvmOverloads constructor(
         this.setColor(Color.parseColor(color))
     }
 
-    protected override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val wMode = MeasureSpec.getMode(widthMeasureSpec)
         var w = MeasureSpec.getSize(widthMeasureSpec)
         val hMode = MeasureSpec.getMode(heightMeasureSpec)
@@ -129,7 +129,7 @@ class WebIndicator @JvmOverloads constructor(
         }
     }
 
-    protected override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         mTargetWidth = measuredWidth
         val screenWidth: Int = context.resources.displayMetrics.widthPixels
@@ -147,7 +147,7 @@ class WebIndicator @JvmOverloads constructor(
         Log.d("WebProgress", "CURRENT_MAX_UNIFORM_SPEED_DURATION$mCurrentMaxUniformSpeedDuration")
     }
 
-    fun setProgress(progress: Float) {
+    private fun setProgress(progress: Float) {
         if (visibility == View.GONE) {
             visibility = View.VISIBLE
         }
