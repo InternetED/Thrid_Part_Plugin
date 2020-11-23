@@ -8,7 +8,12 @@ import com.linecorp.linesdk.api.LineApiClient
 import com.linecorp.linesdk.api.LineApiClientBuilder
 import com.linecorp.linesdk.auth.LineAuthenticationParams
 import com.linecorp.linesdk.auth.LineLoginApi
+import com.pikolive.module.R
+import com.pikolive.module.lifecycle.AppManager
 import com.pikolive.module.login.manager.LoginPlatformProvide
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 /**
  *@date: 2019/3/13 - 上午 09:59
@@ -21,28 +26,21 @@ class LineLoginPlatform : LoginPlatform {
 
     private var callback: LoginPlatform.LogInCallback? = null
 
-    override fun logOut(activity: AppCompatActivity, callback: LoginPlatform.LogOutCallback) {
-        val apiClientBuilder = LineApiClientBuilder(activity, LINE_CHANNEL_ID)
-        mLineApiClient = apiClientBuilder.build()
+    private val lineChannelId: String =
+        AppManager.getInstance().getApplication().getString(R.string.login_line_channelId)
 
-        Thread(Runnable {
+    init {
 
-            val lineApiResponse = mLineApiClient.logout()
-
-            if (lineApiResponse.isSuccess) {
-                callback.onSuccess()
-            } else {
-                callback.onFailure()
-            }
-        }).start()
+        // 檢查是否有設定 login_google_server_id 若無則拋出錯誤
+        if (lineChannelId.isEmpty())
+            throw IllegalAccessError("尚未註冊 Ling channel id，請至 res/values/strings 中設定 login_line_channelId")
 
     }
-
 
     override fun logIn(activity: AppCompatActivity, callback: LoginPlatform.LogInCallback) {
 
         val loginIntent = LineLoginApi.getLoginIntent(
-            activity, LINE_CHANNEL_ID, LineAuthenticationParams.Builder()
+            activity, lineChannelId, LineAuthenticationParams.Builder()
                 .scopes(arrayListOf(Scope.PROFILE))
                 .build()
         )
@@ -50,6 +48,23 @@ class LineLoginPlatform : LoginPlatform {
         activity.startActivityForResult(loginIntent, LoginPlatformProvide.LINE)
 
         this.callback = callback
+
+    }
+
+
+    override fun logOut(activity: AppCompatActivity, callback: LoginPlatform.LogOutCallback) {
+        val apiClientBuilder = LineApiClientBuilder(activity, lineChannelId)
+        mLineApiClient = apiClientBuilder.build()
+
+        GlobalScope.launch(Dispatchers.IO) {
+            val lineApiResponse = mLineApiClient.logout()
+
+            if (lineApiResponse.isSuccess) {
+                callback.onSuccess()
+            } else {
+                callback.onFailure()
+            }
+        }
 
     }
 
@@ -73,11 +88,6 @@ class LineLoginPlatform : LoginPlatform {
         callback = null
 
         logd("LINE_TOKEN : $token", "getAccessToken")
-    }
-
-    companion object {
-        const val LINE_CHANNEL_ID = "1654354447"
-
     }
 
 }

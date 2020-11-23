@@ -29,9 +29,9 @@ class GoogleLoginPlatform : LoginPlatform {
 
         // 檢查是否有設定 login_google_server_id 若無則拋出錯誤
         val serverAuthCode =
-            AppManager.getInstance().getApplication().getString(R.string.login_google_server_id)
+            AppManager.getInstance().getApplication().getString(R.string.login_google_serverId)
         if (serverAuthCode.isEmpty())
-            throw IllegalAccessError("尚未註冊 Google Server id，請至 res/values/strings 中設定 login_google_server_id")
+            throw IllegalAccessError("尚未註冊 Google Server id，請至 res/values/strings 中設定 login_google_serverId")
 
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestServerAuthCode(serverAuthCode)
