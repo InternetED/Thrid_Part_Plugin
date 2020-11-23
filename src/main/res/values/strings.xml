@@ -6,9 +6,8 @@
 
 
     <!--Google Login-->
-    <string name="google_server_id" translatable="false" />
+    <string name="login_google_server_id" translatable="false" />
     <!-- Facebook Login -->
-    <string name="facebook_id" translatable="false">298775961167198</string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb[298775961167198]</string>
+    <string name="login_facebook_applicationId" translatable="false" />
 
 </resources>

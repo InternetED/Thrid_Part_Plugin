@@ -14,22 +14,9 @@ import com.pikolive.module.login.manager.loginPlatform.LoginPlatform
 class LoginPlatformProvide {
     companion object {
         const val GOOGLE = 300
-        val FACEBOOK = CallbackManagerImpl.RequestCodeOffset.Login.toRequestCode()
+        val FACEBOOK = CallbackManagerImpl.RequestCodeOffset.Login.toRequestCode() // 64206
         const val LINE = 500
     }
-
-//    private val cacheSize = (Runtime.getRuntime().maxMemory() / 8 / 2).toInt()
-
-//    private val lruCacheLoginPlatform = object : LruCache<Int, LoginPlatform>(cacheSize) {
-//        override fun create(key: Int): LoginPlatform {
-//            return when (key) {
-//                FACEBOOK -> FacebookLoginPlatform()
-//                LINE -> LineLoginPlatform()
-//                GOOGLE -> GoogleLoginPlatform()
-//                else -> throw IllegalAccessError()
-//            }
-//        }
-//    }
 
     private val platformLazyMap = mapOf(
         FACEBOOK to lazyOf(FacebookLoginPlatform()),

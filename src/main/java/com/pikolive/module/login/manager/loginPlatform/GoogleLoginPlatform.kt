@@ -22,13 +22,27 @@ class GoogleLoginPlatform : LoginPlatform {
 
     private var callback: LoginPlatform.LogInCallback? = null
 
-    private var gso: GoogleSignInOptions? = null
+    private val gso: GoogleSignInOptions
 
+
+    init {
+
+        // 檢查是否有設定 login_google_server_id 若無則拋出錯誤
+        val serverAuthCode =
+            AppManager.getInstance().getApplication().getString(R.string.login_google_server_id)
+        if (serverAuthCode.isEmpty())
+            throw IllegalAccessError("尚未註冊 Google Server id，請至 res/values/strings 中設定 login_google_server_id")
+
+        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestServerAuthCode(serverAuthCode)
+            .requestEmail()
+            .build()
+    }
 
     override fun logIn(activity: AppCompatActivity, callback: LoginPlatform.LogInCallback) {
 
 
-        mGoogleSignInClient = GoogleSignIn.getClient(activity, getGoogleSignInOptions())
+        mGoogleSignInClient = GoogleSignIn.getClient(activity, gso)
 
         val googleSignIntent = mGoogleSignInClient.signInIntent
 
@@ -39,7 +53,7 @@ class GoogleLoginPlatform : LoginPlatform {
 
     override fun logOut(activity: AppCompatActivity, callback: LoginPlatform.LogOutCallback) {
 
-        mGoogleSignInClient = GoogleSignIn.getClient(activity, getGoogleSignInOptions())
+        mGoogleSignInClient = GoogleSignIn.getClient(activity, gso)
         val signOut = mGoogleSignInClient.signOut()
 
         signOut.addOnSuccessListener {
@@ -69,22 +83,6 @@ class GoogleLoginPlatform : LoginPlatform {
 
         }
 
-    }
-
-    private fun getGoogleSignInOptions(): GoogleSignInOptions {
-        if (gso == null) {
-            val serverAuthCode =
-                AppManager.getInstance().getApplication().getString(R.string.google_server_id)
-            if (serverAuthCode.isEmpty())
-                throw IllegalAccessError("尚未註冊 Google Server id，請至 res/values/strings 中設定 google_server_id")
-
-            gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestServerAuthCode(serverAuthCode)
-                .requestEmail()
-                .build()
-        }
-
-        return gso!!
     }
 
 }
