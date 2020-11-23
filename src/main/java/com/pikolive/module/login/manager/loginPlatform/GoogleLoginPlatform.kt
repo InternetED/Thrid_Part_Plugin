@@ -6,6 +6,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.internet.boy.androidbase.kutils.logd
+import com.pikolive.module.R
+import com.pikolive.module.lifecycle.AppManager
 import com.pikolive.module.login.manager.LoginPlatformProvide
 
 
@@ -20,18 +22,13 @@ class GoogleLoginPlatform : LoginPlatform {
 
     private var callback: LoginPlatform.LogInCallback? = null
 
-
-    private val gso by lazy {
-        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestServerAuthCode(SERVER_AUTH_CODE)
-            .requestEmail()
-            .build()
-    }
+    private var gso: GoogleSignInOptions? = null
 
 
     override fun logIn(activity: AppCompatActivity, callback: LoginPlatform.LogInCallback) {
 
-        mGoogleSignInClient = GoogleSignIn.getClient(activity, gso)
+
+        mGoogleSignInClient = GoogleSignIn.getClient(activity, getGoogleSignInOptions())
 
         val googleSignIntent = mGoogleSignInClient.signInIntent
 
@@ -42,7 +39,7 @@ class GoogleLoginPlatform : LoginPlatform {
 
     override fun logOut(activity: AppCompatActivity, callback: LoginPlatform.LogOutCallback) {
 
-        mGoogleSignInClient = GoogleSignIn.getClient(activity, gso)
+        mGoogleSignInClient = GoogleSignIn.getClient(activity, getGoogleSignInOptions())
         val signOut = mGoogleSignInClient.signOut()
 
         signOut.addOnSuccessListener {
@@ -74,13 +71,20 @@ class GoogleLoginPlatform : LoginPlatform {
 
     }
 
+    private fun getGoogleSignInOptions(): GoogleSignInOptions {
+        if (gso == null) {
+            val serverAuthCode =
+                AppManager.getInstance().getApplication().getString(R.string.google_server_id)
+            if (serverAuthCode.isEmpty())
+                throw IllegalAccessError("尚未註冊 Google Server id，請至 res/values/strings 中設定 google_server_id")
 
-    companion object {
+            gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestServerAuthCode(serverAuthCode)
+                .requestEmail()
+                .build()
+        }
 
-        const val SERVER_AUTH_CODE =
-            "1004800572541-d8g7orjksghbove3qbfouvldc4q0itmt.apps.googleusercontent.com"
-
-
+        return gso!!
     }
 
 }

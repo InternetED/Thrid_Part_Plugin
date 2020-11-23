@@ -2,12 +2,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <!-- Google AdMob -->
-    <string name="admob_id">ca-app-pub-5377836474241430~4224903707</string>
+    <string name="admob_id" translatable="false">ca-app-pub-5377836474241430~4224903707</string>
 
 
-
+    <!--Google Login-->
+    <string name="google_server_id" translatable="false" />
     <!-- Facebook Login -->
-    <string name="facebook_id">298775961167198</string>
-    <string name="fb_login_protocol_scheme">fb[298775961167198]</string>
+    <string name="facebook_id" translatable="false">298775961167198</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb[298775961167198]</string>
 
 </resources>
