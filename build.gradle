@@ -56,14 +56,10 @@ dependencies {
 
 
     // 第三方登入
-    implementation 'com.google.android.gms:play-services-auth:18.0.0'
-    implementation 'com.facebook.android:facebook-login:5.15.3'
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+    implementation 'com.facebook.android:facebook-login:7.1.0'
     implementation 'com.linecorp:linesdk:5.0.1'
 
-    // InternetED base methods
-//    api 'com.github.InternetED:base:2.0.1'
-
-    def lifecycle_version = "2.2.0"
 
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
