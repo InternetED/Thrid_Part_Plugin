@@ -6,11 +6,7 @@ import android.util.Log
 import android.util.Pair
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebChromeClient
-import android.webkit.WebViewClient
 import android.widget.Toast
-import androidx.lifecycle.LifecycleOwner
-import com.pikolive.module.webview.WebViewLifecycleObserver
 
 /**
  * Creator: ED
@@ -20,9 +16,8 @@ import com.pikolive.module.webview.WebViewLifecycleObserver
  * **/
 open class ProxyWebView @JvmOverloads constructor(
     context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : LollipopFixedWebView(context, attrs, defStyleAttr) {
+    attrs: AttributeSet? = null
+) : LollipopFixedWebView(context, attrs) {
 
 
     override fun setOverScrollMode(mode: Int) {

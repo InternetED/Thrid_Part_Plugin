@@ -17,9 +17,8 @@ import com.pikolive.module.webview.fixed.ProxyWebView
 
 class NestedScrollAgentWebView @JvmOverloads constructor(
     context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : ProxyWebView(context, attrs, defStyleAttr), NestedScrollingChild {
+    attrs: AttributeSet? = null
+) : ProxyWebView(context, attrs), NestedScrollingChild {
     private var mLastMotionY = 0
     private val mScrollOffset = IntArray(2)
     private val mScrollConsumed = IntArray(2)
