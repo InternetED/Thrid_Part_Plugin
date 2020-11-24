@@ -10,7 +10,6 @@ import com.facebook.ads.AudienceNetworkAds
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
-import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import com.pikolive.module.BuildConfig
 
 /**
@@ -22,6 +21,9 @@ import com.pikolive.module.BuildConfig
  * **/
 
 class AdManagerProvider : ContentProvider() {
+
+    private val TAG = this::class.java.simpleName
+
     override fun onCreate(): Boolean {
 
         admobInit()
@@ -32,6 +34,8 @@ class AdManagerProvider : ContentProvider() {
         return true
     }
 
+    //    ca-app-pub-3940256099942544/1033173712 插頁式廣告
+//    ca-app-pub-3940256099942544/8691691433 插頁式視頻廣告
     private fun admobInit() {
         val requestConfiguration =
             RequestConfiguration.Builder()
@@ -42,6 +46,7 @@ class AdManagerProvider : ContentProvider() {
                                 AdRequest.DEVICE_ID_EMULATOR
                             )
                         )
+
                     }
                 }
                 .build()
@@ -53,21 +58,12 @@ class AdManagerProvider : ContentProvider() {
 
     private fun fbinit() {
         AdSettings.setIntegrationErrorMode(AdSettings.IntegrationErrorMode.INTEGRATION_ERROR_CALLBACK_MODE)
-        AudienceNetworkAds.initialize(context?.applicationContext)
-
-
-        Thread {
-            val runCatching = kotlin.runCatching {
-
-                val s =
-                    AdvertisingIdClient.getAdvertisingIdInfo(context?.applicationContext)
-                        .id
-                Log.d("askndasd", "$s")
+        AudienceNetworkAds.buildInitSettings(context)
+            .withInitListener {
+                Log.d(TAG, "Facebook 廣告初始化是否成功：${it.isSuccess}，訊息為：${it.message}")
             }
-            Log.d("askndasd", "${runCatching.exceptionOrNull()}")
+            .initialize()
 
-
-        }.start()
 
         if (BuildConfig.DEBUG) {
             AdSettings.addTestDevice("C83840F79BFB10E6959D1B57BD94194C")

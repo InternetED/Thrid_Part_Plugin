@@ -35,7 +35,7 @@ class FacebookAdListenerAdapter(
     }
 
     override fun onError(p0: Ad?, p1: AdError?) {
-        Log.d(TAG, "onError  $p1")
+        Log.d(TAG, "onError  ${p1?.errorCode} ,${p1?.errorMessage}")
 
         adListener?.onAdFailedToLoad(adObject, "${p1?.errorMessage}")
     }

@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <!-- Google AdMob -->
-    <string name="admob_id" translatable="false">ca-app-pub-5377836474241430~4224903707</string>
+    <string name="admob_id" translatable="false" />
 
 
     <!--Google Login-->
