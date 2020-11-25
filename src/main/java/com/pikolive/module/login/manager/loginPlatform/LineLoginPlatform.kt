@@ -22,7 +22,6 @@ import kotlinx.coroutines.launch
  **/
 class LineLoginPlatform : LoginPlatform {
 
-    private lateinit var mLineApiClient: LineApiClient
 
     private var callback: LoginPlatform.LogInCallback? = null
 
@@ -45,23 +44,25 @@ class LineLoginPlatform : LoginPlatform {
                 .build()
         )
 
-        activity.startActivityForResult(loginIntent, LoginPlatformProvide.LINE)
-
         this.callback = callback
+
+        activity.startActivityForResult(loginIntent, LoginPlatformProvide.LINE)
 
     }
 
 
     override fun logOut(activity: AppCompatActivity, callback: LoginPlatform.LogOutCallback) {
-        val apiClientBuilder = LineApiClientBuilder(activity, lineChannelId)
-        mLineApiClient = apiClientBuilder.build()
+        val lineApiClient = LineApiClientBuilder(activity, lineChannelId)
+            .build()
 
         GlobalScope.launch(Dispatchers.IO) {
-            val lineApiResponse = mLineApiClient.logout()
+            val lineApiResponse = lineApiClient.logout()
 
             if (lineApiResponse.isSuccess) {
+                logd("Line logout has success.")
                 callback.onSuccess()
             } else {
+                logd("Line logout has failure. error：${lineApiResponse.errorData}")
                 callback.onFailure()
             }
         }
@@ -73,21 +74,22 @@ class LineLoginPlatform : LoginPlatform {
         val result = LineLoginApi.getLoginResultFromIntent(data)
 
 
-        val token = if (result.isSuccess) {
-            result.lineCredential?.accessToken?.tokenString
-        } else {
-            logd("${result.errorData}", "getAccessToken")
-            null
-        }
 
-        if (token != null) {
+        if (result.isSuccess) {
+            // 登入成功
+
+            val token = result.lineCredential?.accessToken?.tokenString ?: ""
+            logd("Line login has success. token：$token")
+
             callback?.onSuccess(token)
-        } else {
-            callback?.onFailure()
-        }
-        callback = null
 
-        logd("LINE_TOKEN : $token", "getAccessToken")
+        } else {
+            // 登入失敗
+            logd("Line login has failure. error：${result.errorData}")
+        }
+
+        callback = null // 移除引用
+
     }
 
 }
