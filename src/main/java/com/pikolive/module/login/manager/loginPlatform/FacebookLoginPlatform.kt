@@ -17,7 +17,7 @@ import com.pikolive.module.lifecycle.AppManager
  *@author: Ed
  *@email: salahayo3192@gmail.com
  **/
-class FacebookLoginPlatform : LoginPlatform, FacebookCallback<LoginResult> {
+class FacebookLoginPlatform : LoginPlatform {
 
 
     private val loginManager by lazy { LoginManager.getInstance() }
@@ -36,20 +36,33 @@ class FacebookLoginPlatform : LoginPlatform, FacebookCallback<LoginResult> {
             throw IllegalAccessError("尚未註冊 Facebook application id，請至 res/values/strings 中設定 login_facebook_applicationId")
     }
 
-    private var callback: LoginPlatform.LogInCallback? = null
-
 
     override fun logIn(activity: AppCompatActivity, callback: LoginPlatform.LogInCallback) {
 
         loginManager.loginBehavior = LoginBehavior.NATIVE_WITH_FALLBACK
-        val premission = arrayListOf("email")
 
-        loginManager.logInWithReadPermissions(activity, premission)
+        loginManager.logInWithReadPermissions(activity, null)
 
-        loginManager.registerCallback(callbackManager, this)
+        loginManager.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+            override fun onSuccess(result: LoginResult) {
+                val token = result.accessToken.token
 
+                logd("Facebook login has success. token：$token")
+                callback.onSuccess(token)
+            }
 
-        this.callback = callback
+            override fun onCancel() {
+                logd("Facebook login has cancel.")
+            }
+
+            override fun onError(error: FacebookException) {
+                logd("Facebook login has error. error：${error}")
+
+                callback.onFailure()
+            }
+
+        })
+
     }
 
 
@@ -62,28 +75,4 @@ class FacebookLoginPlatform : LoginPlatform, FacebookCallback<LoginResult> {
         callbackManager.onActivityResult(requestCode, resultCode, data)
     }
 
-    override fun onSuccess(result: LoginResult) {
-
-        val token = result.accessToken.token
-
-        logd(token, "FBLoginStatus_token")
-
-        callback?.onSuccess(token)
-        callback = null
-
-    }
-
-    override fun onCancel() {
-    }
-
-    override fun onError(error: FacebookException) {
-        logd("${error.message}", "FBLoginStatus")
-        logd("${error.stackTrace}", "FBLoginStatus")
-        logd("${error.cause}", "FBLoginStatus")
-//        if (AccessToken.getCurrentAccessToken() != null) {
-//            LoginManager.getInstance().logOut();
-//        }
-        callback?.onFailure()
-        callback = null
-    }
 }
