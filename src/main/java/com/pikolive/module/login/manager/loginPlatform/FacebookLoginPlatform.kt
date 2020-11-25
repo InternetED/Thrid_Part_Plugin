@@ -2,9 +2,7 @@ package com.pikolive.module.login.manager.loginPlatform
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
+import com.facebook.*
 import com.facebook.login.LoginBehavior
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -41,8 +39,6 @@ class FacebookLoginPlatform : LoginPlatform {
 
         loginManager.loginBehavior = LoginBehavior.NATIVE_WITH_FALLBACK
 
-        loginManager.logInWithReadPermissions(activity, null)
-
         loginManager.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult) {
                 val token = result.accessToken.token
@@ -62,6 +58,8 @@ class FacebookLoginPlatform : LoginPlatform {
             }
 
         })
+
+        loginManager.logInWithReadPermissions(activity, arrayListOf("public_profile"))
 
     }
 

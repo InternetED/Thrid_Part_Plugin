@@ -33,6 +33,7 @@ class GoogleLoginPlatform : LoginPlatform {
 
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestServerAuthCode(serverAuthCode)
+            .requestProfile()
             .build()
     }
 
