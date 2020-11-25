@@ -3,7 +3,6 @@ package com.pikolive.module.login.manager.loginPlatform
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.internet.boy.androidbase.kutils.logd
 import com.pikolive.module.R
@@ -18,7 +17,6 @@ import com.pikolive.module.login.manager.LoginPlatformProvide
  **/
 class GoogleLoginPlatform : LoginPlatform {
 
-    private lateinit var mGoogleSignInClient: GoogleSignInClient
 
     private var callback: LoginPlatform.LogInCallback? = null
 
@@ -35,33 +33,38 @@ class GoogleLoginPlatform : LoginPlatform {
 
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestServerAuthCode(serverAuthCode)
-            .requestEmail()
             .build()
     }
 
     override fun logIn(activity: AppCompatActivity, callback: LoginPlatform.LogInCallback) {
 
 
-        mGoogleSignInClient = GoogleSignIn.getClient(activity, gso)
+        val googleSignIntent = GoogleSignIn.getClient(activity, gso).signInIntent
 
-        val googleSignIntent = mGoogleSignInClient.signInIntent
-
-        activity.startActivityForResult(googleSignIntent, LoginPlatformProvide.GOOGLE)
 
         this.callback = callback
+
+        activity.startActivityForResult(googleSignIntent, LoginPlatformProvide.GOOGLE)
     }
 
     override fun logOut(activity: AppCompatActivity, callback: LoginPlatform.LogOutCallback) {
 
-        mGoogleSignInClient = GoogleSignIn.getClient(activity, gso)
-        val signOut = mGoogleSignInClient.signOut()
-
-        signOut.addOnSuccessListener {
-            callback.onSuccess()
-        }
-        signOut.addOnFailureListener {
-            callback.onFailure()
-        }
+        GoogleSignIn.getClient(activity, gso)
+            .signOut()
+            .addOnSuccessListener {
+                logd("Google logout has success.")
+                callback.onSuccess()
+            }
+            .addOnFailureListener {
+                logd("Google logout has failure. error：$it")
+                callback.onFailure()
+            }
+            .addOnCanceledListener {
+                logd("Google logout has cancel.")
+            }
+            .addOnCompleteListener {
+                logd("Google logout has complete.")
+            }
 
     }
 
@@ -69,19 +72,22 @@ class GoogleLoginPlatform : LoginPlatform {
 
         val signedInAccountFromIntent = GoogleSignIn.getSignedInAccountFromIntent(data)
 
-        signedInAccountFromIntent.addOnSuccessListener {
-            val token = it.serverAuthCode ?: ""
-            callback?.onSuccess(token)
-            callback = null
-            logd("GOOGLE_TOKEN : $token", "getAccessToken")
-        }
-
-        signedInAccountFromIntent.addOnFailureListener {
-            callback?.onFailure()
-            callback = null
-            logd("$it", "getAccessToken")
-
-        }
+        signedInAccountFromIntent
+            .addOnSuccessListener {
+                callback?.onSuccess(it.serverAuthCode ?: "")
+                logd("Google login has success. token：${it.serverAuthCode}")
+            }
+            .addOnFailureListener {
+                logd("Google login has failure. error：${it}")
+                callback?.onFailure()
+            }
+            .addOnCanceledListener {
+                logd("Google login has cancel.")
+            }
+            .addOnCompleteListener {
+                logd("Google login has complete.")
+                callback = null // 移除引用
+            }
 
     }
 
