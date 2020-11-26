@@ -2,7 +2,10 @@ package com.pikolive.module.login.manager.loginPlatform
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import com.facebook.*
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
 import com.facebook.login.LoginBehavior
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -36,6 +39,26 @@ class FacebookLoginPlatform : LoginPlatform {
 
 
     override fun logIn(activity: AppCompatActivity, callback: LoginPlatform.LogInCallback) {
+        val currentAccessToken = AccessToken.getCurrentAccessToken()
+        if (currentAccessToken != null && !currentAccessToken.isExpired) {
+
+            logd("Facebook has duble login. token：$currentAccessToken, isExpired：${currentAccessToken.isExpired}")
+
+            // 避免重複登入
+            logOut(activity, object : LoginPlatform.LogOutCallback {
+                override fun onSuccess() {
+                    logIn(activity, callback)
+                }
+
+                override fun onFailure() {
+                    logIn(activity, callback)
+                }
+
+            })
+            return
+        }
+
+
 
         loginManager.loginBehavior = LoginBehavior.NATIVE_WITH_FALLBACK
 

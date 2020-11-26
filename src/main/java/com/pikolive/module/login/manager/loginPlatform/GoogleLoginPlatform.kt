@@ -18,7 +18,7 @@ import com.pikolive.module.login.manager.LoginPlatformProvide
 class GoogleLoginPlatform : LoginPlatform {
 
 
-    private var callback: LoginPlatform.LogInCallback? = null
+    private var logInCallback: LoginPlatform.LogInCallback? = null
 
     private val gso: GoogleSignInOptions
 
@@ -39,11 +39,29 @@ class GoogleLoginPlatform : LoginPlatform {
 
     override fun logIn(activity: AppCompatActivity, callback: LoginPlatform.LogInCallback) {
 
+        val lastSignedInAccount = GoogleSignIn.getLastSignedInAccount(activity)
+        if (lastSignedInAccount != null && lastSignedInAccount.isExpired) {
+
+            logd("Google has account. account：${lastSignedInAccount} isExpired：${lastSignedInAccount.isExpired}")
+
+            // 避免重複登入
+            logOut(activity, object : LoginPlatform.LogOutCallback {
+                override fun onSuccess() {
+                    logIn(activity, callback)
+                }
+
+                override fun onFailure() {
+                    logIn(activity, callback)
+                }
+
+            })
+            return
+        }
 
         val googleSignIntent = GoogleSignIn.getClient(activity, gso).signInIntent
 
 
-        this.callback = callback
+        this.logInCallback = callback
 
         activity.startActivityForResult(googleSignIntent, LoginPlatformProvide.GOOGLE)
     }
@@ -75,19 +93,19 @@ class GoogleLoginPlatform : LoginPlatform {
 
         signedInAccountFromIntent
             .addOnSuccessListener {
-                callback?.onSuccess(it.serverAuthCode ?: "")
+                logInCallback?.onSuccess(it.serverAuthCode ?: "")
                 logd("Google login has success. token：${it.serverAuthCode}")
             }
             .addOnFailureListener {
                 logd("Google login has failure. error：${it}")
-                callback?.onFailure()
+                logInCallback?.onFailure()
             }
             .addOnCanceledListener {
                 logd("Google login has cancel.")
             }
             .addOnCompleteListener {
                 logd("Google login has complete.")
-                callback = null // 移除引用
+                logInCallback = null // 移除引用
             }
 
     }
