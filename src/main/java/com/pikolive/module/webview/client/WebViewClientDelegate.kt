@@ -14,7 +14,7 @@ import androidx.annotation.RequiresApi
  * Mail: salahayo3192@gmail.com
  *
  * **/
-class WebViewClientDelegate(client: WebViewClient? = null) : WebViewClient() {
+open class WebViewClientDelegate(client: WebViewClient? = null) : WebViewClient() {
     private var mDelegate: WebViewClient? = null
 
     protected fun getDelegate(): WebViewClient? {
@@ -26,14 +26,14 @@ class WebViewClientDelegate(client: WebViewClient? = null) : WebViewClient() {
     }
 
     @Deprecated("")
-    override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+    override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
         return if (mDelegate != null) {
             mDelegate!!.shouldOverrideUrlLoading(view, url)
         } else super.shouldOverrideUrlLoading(view, url)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+    override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
         return if (mDelegate != null) {
             mDelegate!!.shouldOverrideUrlLoading(view, request)
         } else {
