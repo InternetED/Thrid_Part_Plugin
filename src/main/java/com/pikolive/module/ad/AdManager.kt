@@ -4,6 +4,7 @@ import com.pikolive.module.ad.enums.AdProvider
 import com.pikolive.module.ad.factory.AbstractAbFactory
 import com.pikolive.module.ad.factory.FacebookAdFactory
 import com.pikolive.module.ad.factory.GoogleAdFactory
+import com.pikolive.module.ad.factory.MediationAbFactory
 
 
 /**
@@ -38,6 +39,7 @@ class AdManager {
         return when (type) {
             AdProvider.Google -> GoogleAdFactory()
             AdProvider.Facebook -> FacebookAdFactory()
+            AdProvider.Mediation -> MediationAbFactory()
         }.apply {
             factoryMap[type] = this
         }
