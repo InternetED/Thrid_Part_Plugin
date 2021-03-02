@@ -31,8 +31,8 @@ android {
 }
 
 dependencies {
-    api project(path: ':androidbase')
 
+    api 'com.github.InternetED:base:2.0.3'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
