@@ -8,5 +8,5 @@ package com.pikolive.module.ad.enums
  * 廣告提供商
  * **/
 enum class AdProvider {
-    Google, Facebook
+    Google, Facebook, Mediation
 }

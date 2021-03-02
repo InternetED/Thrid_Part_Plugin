@@ -9,7 +9,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -23,9 +23,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-    }
-    dataBinding {
-        enabled true
     }
 
 }
@@ -49,9 +46,11 @@ dependencies {
 
 
     // ADMOB
-    implementation 'com.google.android.gms:play-services-ads:19.5.0'
+    implementation 'com.google.android.gms:play-services-ads:19.6.0'
     // FB ad
-    implementation 'com.facebook.android:audience-network-sdk:6.1.0'
+    implementation 'com.facebook.android:audience-network-sdk:6.2.0'
+    // Facebook ad mediation adapter
+    implementation 'com.google.ads.mediation:facebook:6.2.0.0'
 
 
     // 第三方登入

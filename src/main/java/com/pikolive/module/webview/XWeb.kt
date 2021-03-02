@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.pikolive.module.webview.client.DefaultWebChromeClient
+import com.pikolive.module.webview.client.DefaultWebViewClient
 import com.pikolive.module.webview.container.WebViewParentLayout
 import com.pikolive.module.webview.indicator.IndicatorController
 import com.pikolive.module.webview.indicator.IndicatorHandler
@@ -117,8 +118,10 @@ class XWeb private constructor(
 
 
     fun setWebViewClient(webViewClient: WebViewClient): XWeb {
+        val defaultWebViewClient =
+            DefaultWebViewClient(webViewClient)
 
-        xWebSettings.setWebViewClient(webView, webViewClient)
+        xWebSettings.setWebViewClient(webView, defaultWebViewClient)
         return this
     }
 
