@@ -7,20 +7,20 @@
 
 
         <provider
-            android:name=".ad.AdManagerProvider"
             android:authorities="${applicationId}.admanagerprovider"
-            android:exported="false" />
+            android:exported="false"
+            android:name=".ad.AdManagerProvider" />
 
         <provider
-            android:name=".lifecycle.AppManagerProvider"
             android:authorities="${applicationId}.appmanagerprovider"
-            android:exported="false" />
+            android:exported="false"
+            android:name=".lifecycle.AppManagerProvider" />
 
 
         <provider
-            android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider${applicationId}"
-            android:exported="true" />
+            android:exported="true"
+            android:name="com.facebook.FacebookContentProvider" />
 
         <!--        AdMob 使用的-->
         <meta-data

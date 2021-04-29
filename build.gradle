@@ -57,8 +57,7 @@ dependencies {
     // 第三方登入
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'com.facebook.android:facebook-login:7.1.0'
-    implementation 'com.linecorp:linesdk:5.0.1'
-
+    implementation 'com.linecorp.linesdk:linesdk:5.6.1'
 
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
