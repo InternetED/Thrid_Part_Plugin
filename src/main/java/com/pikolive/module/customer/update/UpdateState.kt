@@ -1,7 +1,8 @@
 package com.pikolive.module.customer.update
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
+
 
 /**
  * Creator: ED

@@ -30,7 +30,7 @@ object WebUtils {
         mViewGroup?.removeView(webView)
 
         webView.webChromeClient = null
-        webView.webViewClient = null
+//        webView.webViewClient = null
         webView.tag = null
         webView.clearHistory()
         webView.destroy()

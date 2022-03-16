@@ -6,10 +6,6 @@
     <application>
 
 
-        <provider
-            android:authorities="${applicationId}.admanagerprovider"
-            android:exported="false"
-            android:name=".ad.AdManagerProvider" />
 
         <provider
             android:authorities="${applicationId}.appmanagerprovider"
