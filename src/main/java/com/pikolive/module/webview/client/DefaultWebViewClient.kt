@@ -87,7 +87,7 @@ class DefaultWebViewClient(
      */
     private fun isAcceptedScheme(url: String): Boolean {
         //正則中忽略了大小寫，保險起見，還是轉成小寫
-        val lowerCaseUrl = url.toLowerCase(Locale.getDefault())
+        val lowerCaseUrl = url.lowercase(Locale.getDefault())
         val acceptedUrlSchemeMatcher: Matcher = ACCEPTED_URI_SCHEME.matcher(lowerCaseUrl)
         return acceptedUrlSchemeMatcher.matches()
     }

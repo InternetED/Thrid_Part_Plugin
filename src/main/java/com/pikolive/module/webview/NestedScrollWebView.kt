@@ -55,7 +55,7 @@ class NestedScrollAgentWebView @JvmOverloads constructor(
                     mNestedYOffset += mScrollOffset[1]
                 }
                 mLastMotionY = y - mScrollOffset[1]
-                val oldY: Int = getScrollY()
+                val oldY: Int = scrollY
                 val newScrollY = Math.max(0, oldY + deltaY)
                 val dyConsumed = newScrollY - oldY
                 val dyUnconsumed = deltaY - dyConsumed

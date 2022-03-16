@@ -115,7 +115,7 @@ class WebIndicator @JvmOverloads constructor(
         canvas.drawRect(
             0f,
             0f,
-            mCurrentProgress / 100 * java.lang.Float.valueOf(this.getWidth().toFloat()),
+            mCurrentProgress / 100 * java.lang.Float.valueOf(this.width.toFloat()),
             this.height.toFloat(),
             mPaint
         )
