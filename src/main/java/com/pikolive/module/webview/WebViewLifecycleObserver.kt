@@ -2,10 +2,8 @@ package com.pikolive.module.webview
 
 import android.util.Log
 import android.webkit.WebView
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.OnLifecycleEvent
 import java.lang.ref.WeakReference
 
 /**
@@ -14,7 +12,7 @@ import java.lang.ref.WeakReference
  * Mail: salahayo3192@gmail.com
  *
  * **/
-class WebViewLifecycleObserver(webView: WebView) : LifecycleObserver {
+class WebViewLifecycleObserver(webView: WebView) : DefaultLifecycleObserver {
     private val TAG = javaClass.simpleName
 
     private val weakWebView = WeakReference(webView)
@@ -22,8 +20,9 @@ class WebViewLifecycleObserver(webView: WebView) : LifecycleObserver {
     private val webView: WebView?
         get() = weakWebView.get()
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    fun onResume() {
+    override fun onResume(owner: LifecycleOwner) {
+        super.onResume(owner)
+
         Log.d(TAG, "onResume")
         webView?.apply {
             onResume()
@@ -31,19 +30,18 @@ class WebViewLifecycleObserver(webView: WebView) : LifecycleObserver {
         }
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    fun onPause() {
+    override fun onPause(owner: LifecycleOwner) {
+        super.onPause(owner)
 
         Log.d(TAG, "onPause")
         webView?.apply {
             onPause()
             pauseTimers()
         }
-
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun onDestroy() {
+    override fun onDestroy(owner: LifecycleOwner) {
+        super.onDestroy(owner)
 
         Log.d(TAG, "onDestroy")
         webView?.apply {
@@ -55,4 +53,5 @@ class WebViewLifecycleObserver(webView: WebView) : LifecycleObserver {
         }
         WebUtils.clearWebView(webView)
     }
+
 }

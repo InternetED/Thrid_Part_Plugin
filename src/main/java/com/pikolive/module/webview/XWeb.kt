@@ -40,9 +40,6 @@ class XWeb private constructor(
                     is AppCompatActivity -> {
                         context
                     }
-                    is Fragment -> {
-                        context.requireActivity()
-                    }
                     else -> {
                         throw IllegalAccessError("不支援除 Activity｜Fragment 的 Context")
                     }
