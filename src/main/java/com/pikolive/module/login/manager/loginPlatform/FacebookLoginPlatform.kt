@@ -35,6 +35,11 @@ class FacebookLoginPlatform : LoginPlatform {
             applicationContext.getString(R.string.login_facebook_applicationId)
         if (facebookApplicationId.isEmpty())
             throw IllegalAccessError("尚未註冊 Facebook application id，請至 res/values/strings 中設定 login_facebook_applicationId")
+
+        val facebookClientToken = applicationContext.getString(R.string.facebook_client_token)
+        if (facebookClientToken.isEmpty())
+            throw IllegalAccessError("尚未註冊 Facebook client token，請至 res/values/strings 中設定 facebook_client_token")
+
     }
 
 
@@ -59,8 +64,7 @@ class FacebookLoginPlatform : LoginPlatform {
         }
 
 
-
-        loginManager.loginBehavior = LoginBehavior.NATIVE_WITH_FALLBACK
+        loginManager.setLoginBehavior(LoginBehavior.NATIVE_WITH_FALLBACK)
 
         loginManager.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult) {

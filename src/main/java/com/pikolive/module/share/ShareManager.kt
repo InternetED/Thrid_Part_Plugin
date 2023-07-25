@@ -1,9 +1,15 @@
 package com.pikolive.module.share
 
 import android.content.Context
-import androidx.core.os.bundleOf
+import android.os.Bundle
 import androidx.fragment.app.FragmentManager
-import com.pikolive.module.share.platform.*
+import com.pikolive.module.share.platform.CopyLinkSharePlatform
+import com.pikolive.module.share.platform.InstagramSharePlatform
+import com.pikolive.module.share.platform.LineSharePlatform
+import com.pikolive.module.share.platform.MessengerSharePlatform
+import com.pikolive.module.share.platform.OtherSharePlatform
+import com.pikolive.module.share.platform.SharePlatform
+import com.pikolive.module.share.platform.TelegramSharePlatform
 
 /**
  * Creator: ED
@@ -21,10 +27,11 @@ class ShareManager {
         shareContent: String
     ) {
         ShareFragment().apply {
-            this.arguments = bundleOf(
-                ShareFragment.BUNDLE_SHARE_TITLE to shareTitle,
-                ShareFragment.BUNDLE_SHARE_CONTENT to shareContent
-            )
+
+            this.arguments = Bundle().apply {
+                putString(ShareFragment.BUNDLE_SHARE_TITLE, shareTitle)
+                putString(ShareFragment.BUNDLE_SHARE_CONTENT, shareContent)
+            }
         }.show(fragmentManager, "")
 
     }

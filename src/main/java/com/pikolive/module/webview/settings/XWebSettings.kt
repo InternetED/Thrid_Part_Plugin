@@ -44,7 +44,7 @@ class XWebSettings : WebListenerManager, WebSettingManager {
 
             textZoom = 100
             databaseEnabled = true
-            setAppCacheEnabled(true)
+            cacheMode = WebSettings.LOAD_DEFAULT
             loadsImagesAutomatically = true
             setSupportMultipleWindows(false)
             // 是否阻塞加载网络图片  协议http or https

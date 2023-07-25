@@ -179,18 +179,6 @@ open class WebChromeClientDelegate(webChromeClient: WebChromeClient? = null) :
         )
     }
 
-    @Deprecated("")
-    override fun onReachedMaxAppCacheSize(
-        requiredStorage: Long, quota: Long,
-        quotaUpdater: QuotaUpdater?
-    ) {
-        if (mDelegate != null) {
-            mDelegate!!.onReachedMaxAppCacheSize(requiredStorage, quota, quotaUpdater)
-            return
-        }
-        super.onReachedMaxAppCacheSize(requiredStorage, quota, quotaUpdater)
-    }
-
     override fun onGeolocationPermissionsShowPrompt(
         origin: String?,
         callback: GeolocationPermissions.Callback?
