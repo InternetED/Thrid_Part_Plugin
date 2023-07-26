@@ -38,14 +38,6 @@ class DefaultWebViewClient(
     )
 
 
-    override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-        if (shouldOverrideUrlLoadingByApp(view, url)) {
-            return true
-        }
-
-        return super.shouldOverrideUrlLoading(view, url)
-    }
-
     @RequiresApi(Build.VERSION_CODES.N)
     override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
         if (shouldOverrideUrlLoadingByApp(view, request.url.toString())) {

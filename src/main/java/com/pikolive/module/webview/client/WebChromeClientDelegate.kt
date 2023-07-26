@@ -70,16 +70,6 @@ open class WebChromeClientDelegate(webChromeClient: WebChromeClient? = null) :
         super.onShowCustomView(view, callback)
     }
 
-    override fun onShowCustomView(
-        view: View?, requestedOrientation: Int,
-        callback: CustomViewCallback?
-    ) {
-        if (mDelegate != null) {
-            mDelegate!!.onShowCustomView(view, requestedOrientation, callback)
-            return
-        }
-        super.onShowCustomView(view, requestedOrientation, callback)
-    }
 
     override fun onHideCustomView() {
         if (mDelegate != null) {
@@ -222,11 +212,6 @@ open class WebChromeClientDelegate(webChromeClient: WebChromeClient? = null) :
         super.onPermissionRequestCanceled(request)
     }
 
-    override fun onJsTimeout(): Boolean {
-        return if (mDelegate != null) {
-            mDelegate!!.onJsTimeout()
-        } else super.onJsTimeout()
-    }
 
     @Deprecated("")
     override fun onConsoleMessage(message: String?, lineNumber: Int, sourceID: String?) {
